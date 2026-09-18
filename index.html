@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-scenario="separated">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A guide for whoever's on cat duty: feeding, water, and litter care for Chessie and Bruno.">
+<title>Chessie & Bruno — Cat Care Guide</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.85em' font-size='90'>🐾</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #26241f;
+    --ink-soft: #5c5750;
+    --paper: #f1eee3;
+    --surface: #fffdf8;
+    --line: #e0d8c3;
+    --teal: #2f4f4a;
+    --teal-dark: #203735;
+    --mustard: #d9a62e;
+    --mustard-soft: #f5e6bd;
+    --mustard-ink: #7a5a13;
+    --brick: #9c4a2e;
+    --brick-soft: #f1ddd1;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 2rem 1.1rem 3rem;
+  }
+
+  main { max-width: 560px; margin: 0 auto; }
+
+  a { color: var(--teal-dark); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 1.6rem;
+    padding-bottom: 1.5rem;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: 0;
+    border-bottom: 2px dashed var(--line);
+  }
+  .hero h1 {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 10vw, 3.6rem);
+    color: var(--teal-dark);
+    margin: 0 0 .5rem;
+  }
+  .hero .subtitle {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Scenario picker ---------- */
+  .scenario-picker {
+    max-width: 520px;
+    margin: 0 auto 1.9rem;
+    text-align: center;
+  }
+  .picker-question {
+    font-weight: 600;
+    margin: 0 0 .7rem;
+  }
+  .toggle-group {
+    display: flex;
+    gap: .6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .toggle-btn {
+    flex: 1 1 190px;
+    max-width: 240px;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: .75rem .8rem;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
+    text-align: center;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .toggle-btn .toggle-icon { font-size: 1.4rem; display: block; }
+  .toggle-btn .toggle-label { display: block; font-weight: 700; margin-top: .15rem; color: var(--ink); }
+  .toggle-btn .toggle-sub { display: block; font-size: .78rem; color: var(--ink-soft); margin-top: .25rem; font-weight: 400; }
+  .toggle-btn[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); }
+  .toggle-btn[aria-pressed="true"] .toggle-label { color: #fff; }
+  .toggle-btn[aria-pressed="true"] .toggle-sub { color: #dbe8e6; }
+  .toggle-btn:focus-visible { outline: 3px solid var(--mustard); outline-offset: 2px; }
+  .picker-hint { font-size: .85rem; color: var(--ink-soft); margin-top: .9rem; }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--teal);
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+    margin-bottom: 1rem;
+  }
+  .card.warning { border-left-color: var(--brick); background: var(--brick-soft); }
+  .card.highlight { border-left-color: var(--mustard); background: var(--mustard-soft); }
+
+  .card h2 {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4.5vw, 1.9rem);
+    color: var(--teal-dark);
+    margin: 0 0 .6rem;
+  }
+  .card.warning h2 { color: var(--brick); }
+  .card.highlight h2 { color: var(--mustard-ink); }
+
+  .card ul, .card ol {
+    margin: 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  .card li { line-height: 1.45; }
+  .card p { line-height: 1.55; margin: .6rem 0 0; }
+  .card p:first-child { margin-top: 0; }
+
+  /* card-level accordion (whole card collapsed behind its title) */
+  details.disclosure-card > summary {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4.5vw, 1.9rem);
+    color: var(--teal-dark);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+  }
+  details.disclosure-card.warning > summary { color: var(--brick); }
+  details.disclosure-card > summary::-webkit-details-marker { display: none; }
+  details.disclosure-card > summary::after {
+    content: '+';
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  details.disclosure-card[open] > summary::after { content: '\2212'; }
+  details.disclosure-card > *:not(summary) { margin-top: .8rem; }
+
+  /* inline "tell me more" reveals nested inside an already-titled card */
+  details.disclosure-inline { margin-top: .7rem; }
+  details.disclosure-inline > summary {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    font-size: .92rem;
+    color: var(--teal-dark);
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+  }
+  details.disclosure-inline.warning > summary { color: var(--brick); }
+  details.disclosure-inline > summary::-webkit-details-marker { display: none; }
+  details.disclosure-inline > summary::before {
+    content: '\203A';
+    display: inline-block;
+    transition: transform .18s ease;
+  }
+  details.disclosure-inline[open] > summary::before { transform: rotate(90deg); }
+  details.disclosure-inline > p,
+  details.disclosure-inline > ul {
+    margin-top: .5rem;
+    color: var(--ink-soft);
+    font-size: .95rem;
+  }
+
+  /* emergency / placeholder card */
+  .placeholder-line { margin: .35rem 0; }
+  .placeholder-line em {
+    font-style: normal;
+    background: #fff;
+    padding: .15rem .55rem;
+    border-radius: 6px;
+    border: 1px dashed var(--ink-soft);
+  }
+
+  /* scenario visibility */
+  body[data-scenario="separated"] .together-only { display: none; }
+  body[data-scenario="together"] .separated-only { display: none; }
+
+  footer {
+    text-align: center;
+    margin-top: 2.2rem;
+    color: var(--ink-soft);
+    font-size: .9rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body data-scenario="separated">
+
+<header class="hero">
+  <h1>Chessie &amp; Bruno</h1>
+  <p class="subtitle">Everything you need to keep two very opinionated cats fed, watered, and out of the pantry.</p>
+</header>
+
+<nav class="scenario-picker" aria-label="Choose your situation">
+  <p class="picker-question">Which setup is it today?</p>
+  <div class="toggle-group" role="group">
+    <button class="toggle-btn" data-scenario="separated" aria-pressed="true" type="button">
+      <span class="toggle-icon">🚪</span>
+      <span class="toggle-label">Separated</span>
+      <span class="toggle-sub">Away a while, no one's staying over</span>
+    </button>
+    <button class="toggle-btn" data-scenario="together" aria-pressed="false" type="button">
+      <span class="toggle-icon">🐾</span>
+      <span class="toggle-label">Together</span>
+      <span class="toggle-sub">Sitter's staying at the house</span>
+    </button>
+  </div>
+  <p class="picker-hint">Not sure? Check the upstairs main bedroom door — closed means separated, open means they've got the run of the house.</p>
+</nav>
+
+<main>
+
+  <section class="card">
+    <h2>🥫 Wet food</h2>
+    <ul>
+      <li>Check the kitchen table first — a can sitting out means wet food's on the menu this visit</li>
+      <li>Twice a day: breakfast and dinner</li>
+      <li>Half a can per cat, per meal, with the spoon onto a little plate</li>
+    </ul>
+
+    <div class="separated-only">
+      <p>Feed them in their own separate areas — nothing extra to coordinate.</p>
+    </div>
+
+    <div class="together-only">
+      <p>Chessie eats fast, so she gets held back until Bruno's had his turn:</p>
+      <ol>
+        <li>Put Chessie's plate in the guest bathroom and close her in there</li>
+        <li>Feed Bruno at his mat by the coffee station</li>
+        <li>Wait until Bruno's eaten all or most of it — Chessie's done in about 20 seconds, Bruno can take a lot longer</li>
+        <li>Once Bruno loses interest, let Chessie out</li>
+      </ol>
+      <p>It's fine if she grabs a few of his leftovers on her way over — the point is just to give Bruno a head start.</p>
+    </div>
+  </section>
+
+  <section class="card separated-only">
+    <h2>🥣 Dry food</h2>
+    <ul>
+      <li>Both cats have automatic feeders — mostly hands-off</li>
+      <li>Peek in occasionally and top up if the level looks low</li>
+    </ul>
+  </section>
+
+  <section class="card together-only warning">
+    <h2>🥣 Dry food</h2>
+    <ul>
+      <li><strong>Skip it entirely</strong> while they're together</li>
+      <li>Chessie will happily polish off Bruno's share too, given the chance</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>💧 Water &amp; the fountain</h2>
+    <ul>
+      <li>Top off any bowls that look low</li>
+      <li>The kitchen fountain has a little viewing window — refill when the level drops below halfway</li>
+      <li>Fill it back up past the halfway mark, but stop before the circle's completely full</li>
+      <li>To refill, just pour water straight into the top</li>
+    </ul>
+  </section>
+
+  <section class="card separated-only">
+    <h2>🚽 Litter</h2>
+    <ul>
+      <li><strong>Chessie</strong> — her box is in the shower</li>
+      <li><strong>Bruno</strong> — he's on the Litter-Robot in the basement (upkeep below)</li>
+    </ul>
+    <details class="disclosure-inline">
+      <summary>More on Chessie's box</summary>
+      <p>There should already be enough litter in there. Every few days, scoop the clumps into one of the green bags, then toss the bag in the trash.</p>
+    </details>
+  </section>
+
+  <section class="card together-only">
+    <h2>🚽 Litter</h2>
+    <ul>
+      <li>Both cats share the Litter-Robot in the basement</li>
+      <li>No separate box needed in this setup</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>🤖 Litter-Robot upkeep</h2>
+    <ul>
+      <li>Keep litter filled to the gray circle line visible inside the globe</li>
+      <li>There's a bowl of spare litter sitting on top — look for the gray lid, open it, scoop a few out, and drop them in</li>
+      <li>No need to spread it — the globe does that on its own as it rotates</li>
+    </ul>
+    <details class="disclosure-inline">
+      <summary>Emptying the waste drawer</summary>
+      <p>Every 5 days or so, pull the bottom drawer handle out to check how full it is. If it looks pretty full, empty it into the outside trash can and pop in a fresh bag.</p>
+    </details>
+    <details class="disclosure-inline warning">
+      <summary>⚠️ If it starts acting up</summary>
+      <ul>
+        <li>Yellow light blinking → press reset</li>
+        <li>Red light blinking → press reset</li>
+        <li>Globe stuck mid-turn → totally normal, it'll resume on its own after about a minute. Hit cycle if you don't want to wait it out</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="card separated-only">
+    <details class="disclosure-card warning">
+      <summary>🍞 If Bruno's feeder gets stuck</summary>
+      <p>Stuck open? Press the big button on the back to close it.</p>
+      <p>Heads up: this feeder's built to open only for Bruno, but Chessie is stubborn enough to muscle her way in too — don't be surprised if she manages it.</p>
+    </details>
+  </section>
+
+  <section class="card">
+    <details class="disclosure-card">
+      <summary>🧸 Good to know</summary>
+      <ul>
+        <li>Chessie is extremely food-motivated — keep pantry doors shut or she'll help herself to treats</li>
+        <li>Her favorite toy is the wand/fish-pole toy</li>
+        <li>If she goes missing, check under the dresser with the TV first</li>
+        <li>Bruno's a treat fan too</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="card highlight">
+    <h2>🚨 If something feels off</h2>
+    <p>Add the vet's number and our cell numbers here before this guide goes out to a sitter, so no one's stuck without them.</p>
+    <p class="placeholder-line">Vet: <em>add phone number</em></p>
+    <p class="placeholder-line">Us: <em>add phone number</em></p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Thanks for looking after these two troublemakers. 🐾</p>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.toggle-btn');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const scenario = btn.getAttribute('data-scenario');
+      document.body.setAttribute('data-scenario', scenario);
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
