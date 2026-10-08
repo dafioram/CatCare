@@ -212,6 +212,67 @@
     max-width: 110px;
   }
 
+  /* ---------- Robot issues styling & artwork ---------- */
+  @keyframes status-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+  .blink-fast {
+    animation: status-blink 1.2s infinite ease-in-out;
+  }
+
+  .robot-issues-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.75rem;
+  }
+
+  .robot-issue-item {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    .robot-issue-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .robot-issue-svg {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--teal-dark);
+    border-radius: 8px;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .robot-issue-content {
+    flex: 1;
+  }
+
+  .robot-issue-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .robot-issue-desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin: 0 !important;
+    line-height: 1.45;
+  }
+
   /* emergency / placeholder card */
   .placeholder-line { margin: .35rem 0; }
   .placeholder-line em {
@@ -235,6 +296,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
+    .blink-fast { animation: none !important; }
   }
 </style>
 </head>
@@ -372,11 +434,82 @@
     </details>
     <details class="disclosure-inline warning">
       <summary>⚠️ If it starts acting up</summary>
-      <ul>
-        <li>Yellow light blinking → press reset</li>
-        <li>Red light blinking → press reset</li>
-        <li>Globe stuck mid-turn → totally normal, it'll resume on its own after about a minute. Hit cycle if you don't want to wait it out</li>
-      </ul>
+      <div class="robot-issues-list">
+
+        <div class="robot-issue-item">
+          <div class="robot-issue-svg">
+            <svg viewBox="0 0 130 55" width="100" height="42" role="img" aria-label="Yellow light blinking indicator">
+              <rect x="5" y="5" width="120" height="45" rx="8" fill="#203735" stroke="#e0d8c3" stroke-width="1.5"/>
+              <rect x="12" y="17" width="106" height="20" rx="10" fill="#101c1a"/>
+              <circle cx="25" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="45" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="65" cy="27" r="5.5" fill="#d9a62e" class="blink-fast"/>
+              <circle cx="65" cy="27" r="8.5" fill="none" stroke="#d9a62e" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="85" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="105" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="robot-issue-content">
+            <div class="robot-issue-title">🟡 Yellow light blinking</div>
+            <p class="robot-issue-desc">Press <strong>Reset</strong>.</p>
+          </div>
+        </div>
+
+        <div class="robot-issue-item">
+          <div class="robot-issue-svg">
+            <svg viewBox="0 0 130 55" width="100" height="42" role="img" aria-label="Red light blinking indicator">
+              <rect x="5" y="5" width="120" height="45" rx="8" fill="#203735" stroke="#e0d8c3" stroke-width="1.5"/>
+              <rect x="12" y="17" width="106" height="20" rx="10" fill="#101c1a"/>
+              <circle cx="25" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="45" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="65" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="85" cy="27" r="4.5" fill="#3e8fcc" opacity="0.2"/>
+              <circle cx="105" cy="27" r="5.5" fill="#9c4a2e" class="blink-fast"/>
+              <circle cx="105" cy="27" r="8.5" fill="none" stroke="#9c4a2e" stroke-width="1.5" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="robot-issue-content">
+            <div class="robot-issue-title">🔴 Red light blinking</div>
+            <p class="robot-issue-desc">Press <strong>Reset</strong>.</p>
+          </div>
+        </div>
+
+        <div class="robot-issue-item">
+          <div class="robot-issue-svg">
+            <svg viewBox="0 0 130 55" width="100" height="42" role="img" aria-label="Solid blue with 1 flashing white light indicator">
+              <rect x="5" y="5" width="120" height="45" rx="8" fill="#203735" stroke="#e0d8c3" stroke-width="1.5"/>
+              <rect x="12" y="17" width="106" height="20" rx="10" fill="#101c1a"/>
+              <circle cx="25" cy="27" r="4.5" fill="#3e8fcc"/>
+              <circle cx="45" cy="27" r="4.5" fill="#3e8fcc"/>
+              <circle cx="65" cy="27" r="4.5" fill="#3e8fcc"/>
+              <circle cx="85" cy="27" r="4.5" fill="#3e8fcc"/>
+              <circle cx="105" cy="27" r="5.5" fill="#ffffff" class="blink-fast"/>
+              <circle cx="105" cy="27" r="8.5" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="robot-issue-content">
+            <div class="robot-issue-title">🔵⚪ Solid blue with 1 flashing white</div>
+            <p class="robot-issue-desc">Hit the <strong>Connect</strong> button, wait 10 seconds, then hit it again. This happens because of WiFi issues — if it doesn't reconnect, power cycle the WiFi router.</p>
+          </div>
+        </div>
+
+        <div class="robot-issue-item">
+          <div class="robot-issue-svg">
+            <svg viewBox="0 0 130 55" width="100" height="42" role="img" aria-label="Globe stuck mid-turn diagram">
+              <rect x="5" y="5" width="120" height="45" rx="8" fill="#203735" stroke="#e0d8c3" stroke-width="1.5"/>
+              <path d="M 35 43 L 95 43 L 90 35 L 40 35 Z" fill="#101c1a"/>
+              <circle cx="65" cy="24" r="14" fill="#fffdf8" stroke="#3e8fcc" stroke-width="1.5"/>
+              <path d="M 57 18 Q 65 10 73 18 Q 81 26 73 32" fill="none" stroke="#d9a62e" stroke-width="2" stroke-linecap="round"/>
+              <polyline points="69,33 73,32 74,27" fill="none" stroke="#d9a62e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="robot-issue-content">
+            <div class="robot-issue-title">🔄 Globe stuck mid-turn</div>
+            <p class="robot-issue-desc">Totally normal — it'll resume on its own after about a minute. Hit <strong>Cycle</strong> if you don't want to wait it out.</p>
+          </div>
+        </div>
+
+      </div>
     </details>
   </section>
 
